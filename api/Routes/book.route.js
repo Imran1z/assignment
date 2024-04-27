@@ -5,6 +5,7 @@ const router = express.Router();
 
 // Create a book
 router.post('/create', async (req, res) => {
+    console.log(req.body)
   try {
     const { name, image, reference_no } = req.body;
     const book = new Book({ name, image, reference_no });

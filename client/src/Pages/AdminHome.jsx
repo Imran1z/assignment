@@ -14,13 +14,13 @@ const AdminHome = () => {
             Maintenance
           </Link>
           <Link
-            to="/admin/reports"
+            to="/reports"
             className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-lg text-center block"
           >
             Reports
           </Link>
           <Link
-            to="/admin/transactions"
+            to="/transactions"
             className="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded-lg text-center block"
           >
             Transactions
