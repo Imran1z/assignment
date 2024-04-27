@@ -16,8 +16,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    type:{
-     default:"user"
+    type: {
+      type: String,
+      enum: ['user', 'admin'], // Restrict type to 'user' or 'admin'
+      default: 'user', // Default value is 'user'
     }
   },
   { timestamps: true }
