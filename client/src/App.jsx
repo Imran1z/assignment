@@ -12,6 +12,7 @@ import Reports from './Pages/Reports';
 import MasterListOfBooks from './Pages/Reports/MasterBooks';
 import Transactions from './Pages/Transaction';
 import IsBookAvailable from './Pages/BookIssuePage';
+import IssueBook from './Pages/IssueBook';
 const App = () => {
   const isLoggedIn = localStorage.getItem('userData') !== null;
   const userData = JSON.parse(localStorage.getItem('userData'));
@@ -33,6 +34,7 @@ const App = () => {
       <Route path="/adminHome" element={isAdmin?<AdminHome/>:<Navigate to='/userhome'/>}/>
       <Route path="/login" element={<Login/>}/>
       <Route path="/signup" element={<SignUp/>}/>
+      <Route path="/transactions/issue-book" element={<IssueBook/>}/>
       <Route path="/transactions" element={<Transactions/>}/>
       <Route path="/transactions/is-book-available" element={<IsBookAvailable/>}/>
       <Route path="/reports/master-list-books" element={<MasterListOfBooks/>}/>

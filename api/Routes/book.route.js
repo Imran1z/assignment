@@ -1,5 +1,6 @@
 import express from 'express';
 import Book from '../Models/book.model.js';
+import User from '../Models/user.model.js'
 
 const router = express.Router();
 
@@ -57,6 +58,48 @@ router.get('/search/:name', async (req, res) => {
     }
   } catch (error) {
     return res.status(500).json({ message: error.message });
+  }
+});
+
+
+router.post('/issue', async (req, res) => {
+  try {
+    const { name, issuedFrom, issuedReturn, issuedTo } = req.body;
+    console.log(name, issuedFrom, issuedReturn, issuedTo )
+
+    // Find the book by name
+    const foundBook = await Book.findOne({ name });
+    //console.log(foundBook)
+
+    if (!foundBook) {
+      return res.status(404).json({ message: 'Book not found' });
+    }
+
+    // Check if the book is already issued
+    if (foundBook.isIssued) {
+      return res.status(400).json({ message: 'Book is already issued' });
+    }
+
+    // Find the user by ID
+    const user = await User.findById(issuedTo);
+    console.log(user)
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Update book details
+    foundBook.isIssued = true;
+    foundBook.issuedFrom = issuedFrom;
+    foundBook.issuedReturn = issuedReturn;
+    foundBook.issuedTo = issuedTo;
+
+    // Save the updated book details
+    await foundBook.save();
+
+    res.json({ message: 'Book issued successfully', book: foundBook });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
 
