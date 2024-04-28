@@ -39,4 +39,25 @@ router.delete('/get/:id', async (req, res) => {
   }
 });
 
+
+router.get('/search/:name', async (req, res) => {
+  try {
+    console.log(req.params.name)
+    const bookName = req.params.name;
+    const foundBook = await Book.findOne({ name: bookName });
+
+    if (!foundBook) {
+      return res.status(404).json({ message: 'Book not found' });
+    }
+
+    if (foundBook.isIssued) {
+      return res.json({ message: 'Book is currently issued', book: foundBook });
+    } else {
+      return res.json({ message: 'Book is available', book: foundBook });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
 export default router;

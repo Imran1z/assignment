@@ -7,7 +7,7 @@ const Header = () => {
 
   // Function to check if the current path is signup or login
   const isSignupOrLogin = () => {
-    return location.pathname === "/userhome" ;
+    return location.pathname === "/userhome" || location.pathname === "/reports/master-list-books";
   };
 
   return (
