@@ -65,7 +65,7 @@ router.get('/search/:name', async (req, res) => {
 router.post('/issue', async (req, res) => {
   try {
     const { name, issuedFrom, issuedReturn, issuedTo } = req.body;
-    console.log(name, issuedFrom, issuedReturn, issuedTo )
+    //console.log(name, issuedFrom, issuedReturn, issuedTo )
 
     // Find the book by name
     const foundBook = await Book.findOne({ name });
@@ -82,7 +82,7 @@ router.post('/issue', async (req, res) => {
 
     // Find the user by ID
     const user = await User.findById(issuedTo);
-    console.log(user)
+    //console.log(user)
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
@@ -102,5 +102,19 @@ router.post('/issue', async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
+
+// Route to get all issued books
+router.get('/issued', async (req, res) => {
+  try {
+    // Find all books that are currently issued (isIssued = true)
+    const issuedBooks = await Book.find({ isIssued: true }).populate('issuedTo', 'username');
+
+    res.json( issuedBooks );
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to fetch issued books', error: error.message });
+  }
+});
+
 
 export default router;
